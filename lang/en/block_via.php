@@ -15,10 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Strings for component 'block_via', language 'en'
  *
- * @package   block_via
+ * @package    contrib
+ * @package    block_via
  * @copyright 1999 onwards SVIeSolutions
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'Via recordings';
@@ -27,4 +29,3 @@ $string['norecording'] = 'No recording available';
 $string['configassist'] = 'Setup wizard';
 $string['technicalassist'] = 'Technical support';
 $string['via:addinstance'] = 'Add a new block which displays all the Via recordings';
-

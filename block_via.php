@@ -15,20 +15,38 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Via block.
  *
- * @package   block_via
- * @copyright 1999 onwards SVIeSolutions
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    contrib
+ * @subpackage block_via
+ * @copyright 2011 - 2016 SVIeSolutions
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * This is class block_via
+ *
+ */
+
 class block_via extends block_list {
 
+    /**
+     * This is method init
+     *
+     * @return string This is the bloc title
+     *
+     */
     public function init() {
         $this->title   = get_string('pluginname', 'via');
     }
 
+    /**
+     * Creates the blocks main content
+     *
+     * @return string
+     */
     public function get_content() {
         global $CFG, $USER, $COURSE, $DB;
 
