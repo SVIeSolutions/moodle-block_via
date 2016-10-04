@@ -17,7 +17,6 @@
 /**
  * Via block.
  *
- * @package    contrib
  * @subpackage block_via
  * @copyright 2011 - 2016 SVIeSolutions
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,10 +25,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * This is class block_via
- *
+ * Via block.
+ * Extends moodle class block_list.
  */
-
 class block_via extends block_list {
 
     /**

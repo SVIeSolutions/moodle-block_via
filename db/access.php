@@ -17,7 +17,6 @@
 /**
  * Via capability setup
  *
- * @package    contrib
  * @package    block_via
  * @copyright 1999 onwards SVIeSolutions
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

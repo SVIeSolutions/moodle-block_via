@@ -17,7 +17,6 @@
 /**
  * Via Block - version details
  *
- * @package    contrib
  * @package   block_via
  * @copyright 1999 onwards SVIeSolutions
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2016042002;
+$plugin->version = 2016042003;
 $plugin->requires = 2011030300;  // Moodle version required to run it.
 $plugin->component = 'block_via';  // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE; // This is considered as ready for production sites.
