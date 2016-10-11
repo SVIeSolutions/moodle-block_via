@@ -75,8 +75,8 @@ class block_via extends block_list {
 
                 foreach ($vias as $via) {
 
-                    $playbacks = $DB->get_records_sql('select * from {via_playbacks}
-                                                    WHERE activityid = ' . $via->id . ' ORDER BY creationdate asc');
+                    $playbacks = $DB->get_records_sql('SELECT * from {via_playbacks}
+                                                    WHERE activityid = ? ORDER BY creationdate asc', array($via->id));
 
                     if ($playbacks) {
 
@@ -98,15 +98,13 @@ class block_via extends block_list {
 
                                     $link = '<span class="event '.$private.'">';
                                     $link .= '<img src="' . $CFG->wwwroot . '/mod/via/pix/recording_grey.png"
-                                            width="25" height="25" alt="'.
-                                            get_string('recentrecordings', 'block_via').'
-                                            " style="float:left; margin-bottom:10px;" />
+                                            class="via icon recording" alt="'.
+                                            get_string('recentrecordings', 'block_via').'" />
                                             <a href="' . $CFG->wwwroot . '/mod/via/view.via.php?id='.$via->coursemodule.
                                             '&review=1&playbackid='.$playback->playbackid.$param.'" target="new">'.
                                             $via->name." (".$playback->title . ')</a>';
 
-                                    $link .= ' <div class="date dimmed_text"
-                                            style="padding-left:22px; margin-bottom:10px">
+                                    $link .= ' <div class="date dimmed_text">
                                             ('.userdate($playback->creationdate).')</div></span>';
 
                                     $this->content->items[] = $link;
@@ -131,39 +129,36 @@ class block_via extends block_list {
                 $this->content->items[] = '<hr>';
                 $this->content->icons[] = '';
 
-                $this->content->items[] = '<span class="event" style="white-space:nowrap">
-                                        <img src="' . $CFG->wwwroot . '/mod/via/pix/config_grey.png" width="20" height="20" alt="'.
-                                        get_string('recentrecordings', 'block_via') . ' style="float:left"" />
-                                        <a target="configvia" href="' . $CFG->wwwroot .
-                                        '/mod/via/view.assistant.php?redirect=7" onclick="this.target=\'configvia\';
-                                        return openpopup(null, {url:\'/mod/via/view.assistant.php?redirect=7\', name:\'configvia\',
-                                        options:\'menubar=0,location=0,scrollbars,resizable,width=680,height=500\'});">'.
-                                        get_string("configassist", "block_via").'</a></span>';
+                    $this->content->items[] = '<span class="event">
+                                    <img src="' . $CFG->wwwroot . '/mod/via/pix/config_grey.png" class="via icon config"
+                                    alt="'. get_string('recentrecordings', 'block_via') . '" />
+                                    <a target="configvia" href="' . $CFG->wwwroot .
+                                    '/mod/via/view.assistant.php?redirect=7" onclick="this.target=\'configvia\';
+                                    return openpopup(null, {url:\'/mod/via/view.assistant.php?redirect=7\', name:\'configvia\',
+                                    options:\'menubar=0,location=0,scrollbars,resizable,width=680,height=500\'});">'.
+                                    get_string("configassist", "block_via").'</a></span>';
                 $this->content->icons[] = '';
 
                 if (get_config('via', 'via_technicalassist_url') == null) {
                     $this->content->items[] = '<span class="event">
-                                            <img src="' . $CFG->wwwroot .
-                                            '/mod/via/pix/assistance_grey.png" width="20" height="20" alt="' .
-                                            get_string('recentrecordings', 'block_via') . ' style="float:left"" />
-                                            <a target="configvia" href="' . $CFG->wwwroot .
-                                            '/mod/via/view.assistant.php?redirect=6" onclick="this.target=\'configvia\';
-                                            return openpopup(null, {url:\'/mod/via/view.assistant.php?redirect=6\',
-                                            name:\'configvia\',
-                                            options:\'menubar=0,location=0,scrollbars,resizable,width=650,height=400\'});">'.
-                                            get_string("technicalassist", "block_via").'</a></span>';
+                                        <img src="' . $CFG->wwwroot .'/mod/via/pix/assistance_grey.png" class="via icon tech"
+                                        alt="' . get_string('recentrecordings', 'block_via') . '"/>
+                                        <a target="configvia" href="' . $CFG->wwwroot .
+                                        '/mod/via/view.assistant.php?redirect=6" onclick="this.target=\'configvia\';
+                                        return openpopup(null, {url:\'/mod/via/view.assistant.php?redirect=6\',
+                                        name:\'configvia\',
+                                        options:\'menubar=0,location=0,scrollbars,resizable,width=650,height=400\'});">'.
+                                        get_string("technicalassist", "block_via").'</a></span>';
                 } else {
                     $this->content->items[] = '<span class="event">
-                                            <img src="' . $CFG->wwwroot .
-                                            '/mod/via/pix/assistance_grey.png" width="20" height="20" alt="' .
-                                            get_string('recentrecordings', 'block_via') . ' style="float:left"" />
-                                            <a target="configvia" href="'.
-                                            get_config('via', 'via_technicalassist_url').
-                                            '?redirect=6" onclick="this.target=\'configvia\';
-                                            return openpopup(null, {url:\''.
-                                            get_config('via', 'via_technicalassist_url').'?redirect=6\', name:\'configvia\',
-                                            options:\'menubar=0,location=0,scrollbars,resizable,width=650,height=400\'});">'.
-                                            get_string("technicalassist", "block_via").'</a></span>';
+                                        <img src="' . $CFG->wwwroot .'/mod/via/pix/assistance_grey.png" class="via icon ass"
+                                        alt="' . get_string('recentrecordings', 'block_via') . '" />
+                                        <a target="configvia" href="'. get_config('via', 'via_technicalassist_url').
+                                        '?redirect=6" onclick="this.target=\'configvia\';
+                                        return openpopup(null, {url:\''.
+                                        get_config('via', 'via_technicalassist_url').'?redirect=6\', name:\'configvia\',
+                                        options:\'menubar=0,location=0,scrollbars,resizable,width=650,height=400\'});">'.
+                                        get_string("technicalassist", "block_via").'</a></span>';
                 }
 
                 $this->content->icons[] = '';
