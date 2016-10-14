@@ -64,55 +64,57 @@ class block_via extends block_list {
 
         $context = context_course::instance($COURSE->id);
 
-        if (has_capability('mod/via:manage', $context)) {
+        if (has_capability('mod/via:view', $context)) {
 
             if ($vias = get_all_instances_in_course('via', $COURSE)) {
 
                 $recordingavailable = false;
+                $teachermessage = false;
 
                 $this->content->items[] = '<div class="heading"><b>'.get_string("recentrecordings", "block_via").'</b></div>';
                 $this->content->icons[] = '';
 
                 foreach ($vias as $via) {
 
-                    $playbacks = $DB->get_records_sql('SELECT * from {via_playbacks}
-                                                    WHERE activityid = ? ORDER BY creationdate asc', array($via->id));
+                    if (!has_capability('mod/via:manage', $context)) {
+                        // We need to validate if the use is associated to the activity in order to see the recording.
+                        $allowed = $DB->get_record('via_participants', array('activityid' => $via->id, 'userid' => $USER->id));
+                        $param = '';
+                    } else {
+                        // Those with greater rights can see the recording, even if they are not associated!
+                        $param = '&fa=1';
+                    }
+
+                    if (isset($allowed) && $allowed == true || has_capability('mod/via:manage', $context)) {
+                        $playbacks = $DB->get_records_sql('SELECT * from {via_playbacks}
+                                                    WHERE activityid = ? AND accesstype <> 0 ORDER BY creationdate asc',
+                                                    array($via->id));
+                    }
+                    if (has_capability('mod/via:manage', $context) && !$teachermessage) {
+                        $hiddenplaybacks = $DB->count_records('via_playbacks', array('activityid' => $via->id, 'accesstype' => 0));
+                        if ($hiddenplaybacks > 0) {
+                            $teachermessage = true;
+                        }
+                    }
 
                     if ($playbacks) {
-
                         foreach ($playbacks as $playback) {
-                            if (($via->recordingmode == 1 &&
-                                ($via->isreplayallowed || $playback->accesstype > 0) &&
-                                (($via->datebegin + (60 * $via->duration)) < time()))
-                                || ($via->recordingmode == 2 && ($via->isreplayallowed || $playback->accesstype > 0))) {
 
-                                if ($playback->accesstype > 0 || (has_capability('mod/via:manage', $context)
-                                    && via_get_is_user_host($USER->id, $via->id))) {
+                            $link = '<span class="event ">';
+                            $link .= '<img src="' . $CFG->wwwroot . '/mod/via/pix/recording_grey.png"
+                                    class="via icon recording" alt="'.
+                                    get_string('recentrecordings', 'block_via').'" />
+                                    <a href="' . $CFG->wwwroot . '/mod/via/view.via.php?id='.$via->coursemodule.
+                                    '&review=1&playbackid='.$playback->playbackid.$param.'" target="new">'.
+                                    $via->name." (".$playback->title . ')</a>';
 
-                                    $private = ($playback->accesstype == 0 || !$via->visible) ? "dimmed_text" : "";
-                                    if ($private) {
-                                        $param = '&p=1';
-                                    } else {
-                                        $param = '';
-                                    }
+                            $link .= ' <div class="date dimmed_text">
+                                    ('.userdate($playback->creationdate).')</div></span>';
 
-                                    $link = '<span class="event '.$private.'">';
-                                    $link .= '<img src="' . $CFG->wwwroot . '/mod/via/pix/recording_grey.png"
-                                            class="via icon recording" alt="'.
-                                            get_string('recentrecordings', 'block_via').'" />
-                                            <a href="' . $CFG->wwwroot . '/mod/via/view.via.php?id='.$via->coursemodule.
-                                            '&review=1&playbackid='.$playback->playbackid.$param.'" target="new">'.
-                                            $via->name." (".$playback->title . ')</a>';
+                            $this->content->items[] = $link;
+                            $this->content->icons[] = '';
 
-                                    $link .= ' <div class="date dimmed_text">
-                                            ('.userdate($playback->creationdate).')</div></span>';
-
-                                    $this->content->items[] = $link;
-                                    $this->content->icons[] = '';
-
-                                    $recordingavailable = true;
-                                }
-                            }
+                            $recordingavailable = true;
                         }
                     }
                 }
@@ -122,14 +124,16 @@ class block_via extends block_list {
                                             get_string("norecording", "block_via").'</i></div>';
                     $this->content->icons[] = '';
                 }
-            }
-
-            if (has_capability('mod/via:view', $context)) {
+                if (has_capability('mod/via:manage', $context) && $teachermessage) {
+                    $this->content->items[] = '<div class="event dimmed_text"><i>'.
+                        get_string("hiddenrecordings", "block_via").'</i></div>';
+                    $this->content->icons[] = '';
+                }
 
                 $this->content->items[] = '<hr>';
                 $this->content->icons[] = '';
 
-                    $this->content->items[] = '<span class="event">
+                $this->content->items[] = '<span class="event">
                                     <img src="' . $CFG->wwwroot . '/mod/via/pix/config_grey.png" class="via icon config"
                                     alt="'. get_string('recentrecordings', 'block_via') . '" />
                                     <a target="configvia" href="' . $CFG->wwwroot .
@@ -167,5 +171,13 @@ class block_via extends block_list {
         }
 
         return $this->content;
+    }
+
+    /**
+     * Set the applicable formats for this block to all
+     * @return array
+     */
+    public function applicable_formats() {
+        return array('all' => true, 'mod' => false, 'my' => false, 'admin' => false, 'tag' => false);
     }
 }

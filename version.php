@@ -24,11 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2016042004;
+$plugin->version = 2016042005;
 $plugin->requires = 2011030300;  // Moodle version required to run it.
 $plugin->component = 'block_via';  // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE; // This is considered as ready for production sites.
-$plugin->release = 'v2.7-r4'; // This is our first revision for Moodle 2.7.x branch.
+$plugin->release = 'v2.7-r5'; // This is our first revision for Moodle 2.7.x branch.
 
 $plugin->dependencies = array(
     'mod_via' => 2016042000,   // The Via activity must be present.
