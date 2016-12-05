@@ -105,7 +105,7 @@ class block_via extends block_list {
                                     class="via icon recording" alt="'.
                                     get_string('recentrecordings', 'block_via').'" />
                                     <a href="' . $CFG->wwwroot . '/mod/via/view.via.php?id='.$via->coursemodule.
-                                    '&review=1&playbackid='.$playback->playbackid.$param.'" target="new">'.
+                                    '&review=1&playbackid='.$playback->playbackid.$param.'" target="_blank">'.
                                     $via->name." (".$playback->title . ')</a>';
 
                             $link .= ' <div class="date dimmed_text">
@@ -138,8 +138,8 @@ class block_via extends block_list {
                                     alt="'. get_string('recentrecordings', 'block_via') . '" />
                                     <a target="configvia" href="' . $CFG->wwwroot .
                                     '/mod/via/view.assistant.php?redirect=7" onclick="this.target=\'configvia\';
-                                    return openpopup(null, {url:\'/mod/via/view.assistant.php?redirect=7\', name:\'configvia\',
-                                    options:\'menubar=0,location=0,scrollbars,resizable,width=680,height=500\'});">'.
+                                    return window.open(\'/mod/via/view.assistant.php?redirect=7\', \'configvia\',
+                                   \'menubar=0,location=0,scrollbars,resizable,width=740,height=500\');">'.
                                     get_string("configassist", "block_via").'</a></span>';
                 $this->content->icons[] = '';
 
@@ -147,21 +147,23 @@ class block_via extends block_list {
                     $this->content->items[] = '<span class="event">
                                         <img src="' . $CFG->wwwroot .'/mod/via/pix/assistance_grey.png" class="via icon tech"
                                         alt="' . get_string('recentrecordings', 'block_via') . '"/>
-                                        <a target="configvia" href="' . $CFG->wwwroot .
+                                        <a target="configvia"
+                                        href="' . $CFG->wwwroot .
                                         '/mod/via/view.assistant.php?redirect=6" onclick="this.target=\'configvia\';
-                                        return openpopup(null, {url:\'/mod/via/view.assistant.php?redirect=6\',
-                                        name:\'configvia\',
-                                        options:\'menubar=0,location=0,scrollbars,resizable,width=650,height=400\'});">'.
+                                        return window.open(\'/mod/via/view.assistant.php?redirect=6\',
+                                        \'configvia\',
+                                        \'menubar=0,location=0,scrollbars,resizable,width=650,height=400\');">'.
                                         get_string("technicalassist", "block_via").'</a></span>';
                 } else {
                     $this->content->items[] = '<span class="event">
                                         <img src="' . $CFG->wwwroot .'/mod/via/pix/assistance_grey.png" class="via icon ass"
                                         alt="' . get_string('recentrecordings', 'block_via') . '" />
-                                        <a target="configvia" href="'. get_config('via', 'via_technicalassist_url').
-                                        '?redirect=6" onclick="this.target=\'configvia\';
-                                        return openpopup(null, {url:\''.
-                                        get_config('via', 'via_technicalassist_url').'?redirect=6\', name:\'configvia\',
-                                        options:\'menubar=0,location=0,scrollbars,resizable,width=650,height=400\'});">'.
+                                        <a target="configvia"
+                                        href="'. get_config('via', 'via_technicalassist_url').
+                        '                ?redirect=6" onclick="this.target=\'configvia\';
+                                        return open.window(\''.
+                                        get_config('via', 'via_technicalassist_url').'?redirect=6\',\'configvia\',
+                                        \'menubar=0,location=0,scrollbars,resizable,width=650,height=400\');">'.
                                         get_string("technicalassist", "block_via").'</a></span>';
                 }
 
@@ -178,6 +180,6 @@ class block_via extends block_list {
      * @return array
      */
     public function applicable_formats() {
-        return array('all' => true, 'mod' => false, 'my' => false, 'admin' => false, 'tag' => false);
+        return array('course-view' => true, 'mod' => true, 'admin' => false, 'site-index' => false, 'my' => false);
     }
 }

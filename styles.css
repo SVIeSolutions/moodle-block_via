@@ -11,11 +11,11 @@ img.via.icon{
 .via.icon.tech {
      float:left;
 }
-via.icon.recording {
+.via.icon.recording {
     float:left;
     margin-bottom:10px;
 }
-.date.dimmed_text{
+.block_via .date.dimmed_text{
     padding-left:22px;
     margin-bottom:10px
 }
