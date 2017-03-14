@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Via capability setup
+ * Via block caps.
  *
  * @package    block_via
- * @copyright 1999 onwards SVIeSolutions
+ * @copyright  SVIeSolutions <alexandra.dinan@sviesolutions.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -27,14 +27,13 @@ defined('MOODLE_INTERNAL') || die();
 $capabilities = array(
 
     'block/via:addinstance' => array(
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
-            'manager' => CAP_ALLOW
+    'riskbitmask' => RISK_SPAM | RISK_XSS,
+    'captype' => 'write',
+    'contextlevel' => CONTEXT_BLOCK,
+    'archetypes' => array(
+        'editingteacher' => CAP_ALLOW,
+        'manager' => CAP_ALLOW
         ),
-
-        'clonepermissionsfrom' => 'moodle/site:manageblocks'
+    'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
 );
