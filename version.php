@@ -22,12 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->version = 2017030102;
+$plugin->version = 2020102202;
 $plugin->requires = 2011030300;  // Moodle version required to run it.
 $plugin->component = 'block_via';  // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE; // This is considered as ready for production sites.
-$plugin->release = 'v3.2-r2';
+$plugin->release = 'v3.9-r2';
 
 $plugin->dependencies = array(
-	'mod_via' => 2017030101,  // The Foo activity must be present (any version).
-	);
+	'mod_via' => 2020102201
+    );
