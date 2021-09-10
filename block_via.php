@@ -112,7 +112,13 @@ class block_via extends block_list {
                                         width="25" height="25" alt="'.get_string('recentrecordings', 'block_via') . '"
                                         style="float:left; margin-bottom:10px;" />';
                                 if ($via->activitytype != 4) {
-                                    $link .= '<a href="' . $CFG->wwwroot . '/mod/via/view.via.php?id='.$cm->id.'&review=1&playbackid='.$playback->playbackid.$param.'" target="new">';
+                                    if ($via->activityversion == 0) {
+                                        // Via9.
+                                        $link .= '<a href="' . $CFG->wwwroot . '/mod/via/view.via.php?id='.$cm->id.'&review=1&playbackid='.$playback->playbackid.$param.'" target="new">';
+                                    } else {
+                                        // ViaHtml5.
+                                        $link .='<a href="/mod/via/view.via.php?id='.$cm->id.'&review=1&playbackid='.$playback->playbackid.$param.'" referrerpolicy="origin" target="_blank" >';
+                                    }
                                 }
                                 $link .= $via->name." (".$playback->title . ')';
                                 $link .= '</a>';
