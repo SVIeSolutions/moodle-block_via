@@ -117,7 +117,7 @@ class block_via extends block_list {
                                         $link .= '<a href="' . $CFG->wwwroot . '/mod/via/view.via.php?id='.$cm->id.'&review=1&playbackid='.$playback->playbackid.$param.'" target="new">';
                                     } else {
                                         // ViaHtml5.
-                                        $link .='<a href="/mod/via/view.via.php?id='.$cm->id.'&review=1&playbackid='.$playback->playbackid.$param.'" referrerpolicy="origin" target="_blank" >';
+                                        $link .='<a href="'. $CFG->wwwroot . '/mod/via/view.via.php?id='.$cm->id.'&review=1&playbackid='.$playback->playbackid.$param.'" referrerpolicy="origin" target="_blank" >';
                                     }
                                 }
                                 $link .= $via->name." (".$playback->title . ')';
